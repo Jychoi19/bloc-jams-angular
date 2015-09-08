@@ -1,26 +1,28 @@
 var app = angular.module('blocJams', ['ui.router']);
 
- myAppModule.config(function($stateProvider, $locationProvider) {
+app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
  
-      $locationProvider.html5Mode({
+    $locationProvider.html5Mode({
          enabled: true,
          requireBase: false
      });
 
-     $stateProvider
+    $urlRouterProvider.otherwise("/landing");
+
+    $stateProvider
      	.state('landing', {
         	url: '/landing',
-         	controller: 'Landing.controller',
+         	controller: 'LandingController',
          	templateUrl: '/templates/landing.html'
      	})
      	.state('collection', {
         	 url: '/collection',
-         	controller: 'Collection.controller',
+         	controller: 'CollectionController',
          	templateUrl: '/templates/collection.html'
      	})
         .state('album', {
         	 url: '/album',
-         	controller: 'Album.controller',
+         	controller: 'AlbumController',
          	templateUrl: '/templates/album.html'
      	})
  });
