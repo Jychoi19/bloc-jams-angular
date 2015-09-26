@@ -47,7 +47,12 @@
      margin-right: 16.5%;
  }
  
- .player-bar .player-bar-control-group .play-pause {
+ .player-bar .player-bar-control-group .play {
+     margin-right: 15%;
+     font-size: 1.6rem;
+ }
+
+  .player-bar .player-bar-control-group .pause {
      margin-right: 15%;
      font-size: 1.6rem;
  }

@@ -1,17 +1,21 @@
 <main class="album-view container narrow">
     <section class="clearfix">
         <div class="column half">
-            <img src="{{ picasso.albumArtUrl }}" class="album-cover-art">
+            <img src="{{ album.albumArtUrl }}" class="album-cover-art">
         </div>
         <div class="album-view-details column half">
-            <h2 class="album-view-title">{{ picasso.name }}</h2>
-            <h3 class="album-view-artist">{{ picasso.artist }}</h3>
-            <h5 class="album-view-release-info">{{ picasso.year + " " + picasso.label }}</h5>
+            <h2 class="album-view-title">{{ album.name }}</h2>
+            <h3 class="album-view-artist">{{ album.artist }}</h3>
+            <h5 class="album-view-release-info">{{ album.year + " " + album.label }}</h5>
         </div>
     </section>
-    <table class="album-view-song-list" ng-repeat="song in picasso.songs">
+    <table class="album-view-song-list" ng-repeat="song in album.songs">
         <tr class="album-view-song-item">
-            <td class="song-item-number" data-song-number=" + songNumber + ">{{ $index + 1 }}.</td>
+            <td class="song-item-number" ng-mouseenter="hoverOn($index)" ng-mouseleave="hoverOff($index)">
+                <span class="album-song-button ion-play" ng-click="playSong($index)" ng-show="!playing && activePosition === $index"></span>
+                <span class="album-song-button ion-pause" ng-click="pauseSong()" ng-show="playing && activePosition === $index"></span>      
+                <span ng-show="activePosition !== $index">{{ $index + 1 }}.<span>
+            </td>
             <td class="song-item-title">{{ song.name }}</td>
             <td class="song-item-duration">{{ song.length }}</td>
         </tr>           
@@ -20,29 +24,32 @@
  
 <section class="player-bar">
     <div class="container">
-        <div class="player-bar-control-group left-controls">
-            <a class="previous">
+        <div class="player-bar-control-group left-controls" ng-click="logClickAction()">
+            <a class="previous" ng-click="previousSong()">
                 <span class="ion-skip-backward"></span>
             </a>
-            <a class="play-pause">
+            <a class="play" ng-click="playSong()" ng-hide="playing">
                 <span class="ion-play"></span>
             </a>
-            <a class="next">
-                <span class="ion-skip-forward"></span>
+              <a class="pause" ng-click="pauseSong()" ng-show="playing">
+                <span class="ion-pause"></span>
+            </a>
+            <a class="next" ng-click="nextSong()">
+                <span class="ion-skip-forward" ></span>
             </a>
         </div>
         <div class="player-bar-control-group currently-playing">
-            <h2 class="song-name"></h2>
+            <h2 class="song-name">{{ song.name }}</h2>
             <h2 class="artist-song-mobile"></h2>
                 <div class="seek-control">
                 <div class="seek-bar">
                     <div class="fill"></div>
                     <div class="thumb"></div>
                 </div>
-                <div class="current-time">0:00</div>
-                <div class="total-time">0:00</div>
+                <div class="current-time" ng-show="getTime3()">{{ time1 }}</div>
+                <div class="total-time" ng-show="getDuration3()">{{ duration1 }}</div>
             </div>
-            <h3 class="artist-name"></h3>
+            <h3 class="artist-name">{{ album.artist }}</h3>
         </div>
         <div class="player-bar-control-group right-controls">
             <div class="volume">
