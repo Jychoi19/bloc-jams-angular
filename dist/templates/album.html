@@ -12,9 +12,9 @@
     <table class="album-view-song-list" ng-repeat="song in album.songs">
         <tr class="album-view-song-item">
             <td class="song-item-number" ng-mouseenter="hoverOn($index)" ng-mouseleave="hoverOff($index)">
-                <span class="album-song-button ion-play" ng-click="playSong($index)" ng-show="!playing && activePosition === $index"></span>
-                <span class="album-song-button ion-pause" ng-click="pauseSong()" ng-show="playing && activePosition === $index"></span>      
-                <span ng-show="activePosition !== $index">{{ $index + 1 }}.<span>
+                <span class="album-song-button ion-play" ng-click="playSong($index)" ng-show="((song !== currentSong || !playing) && activePosition === $index) || (song === currentSong && !playing)"></span>
+                <span class="album-song-button ion-pause" ng-click="pauseSong()" ng-show="playing && song === currentSong"></span>      
+                <span ng-show="song !== currentSong && activePosition !== $index">{{ $index + 1 }}.<span>
             </td>
             <td class="song-item-title">{{ song.name }}</td>
             <td class="song-item-duration">{{ song.length }}</td>
@@ -46,8 +46,8 @@
                     <div class="fill"></div>
                     <div class="thumb"></div>
                 </div>
-                <div class="current-time" ng-show="getTime3()">{{ time1 }}</div>
-                <div class="total-time" ng-show="getDuration3()">{{ duration1 }}</div>
+                <div class="current-time">{{ time }}</div>
+                <div class="total-time">{{ duration }}</div>
             </div>
             <h3 class="artist-name">{{ album.artist }}</h3>
         </div>

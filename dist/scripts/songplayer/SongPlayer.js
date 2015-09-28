@@ -36,6 +36,9 @@ module.factory('SongPlayer', function() {
             }
             currentSongIndex = songNumber;
             currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
+            if (currentSoundFile !== null) {
+                currentSoundFile.unbind('timeupdate');
+            };
             currentSoundFile = new buzz.sound(currentSongFromAlbum.audioUrl, {
                 formats: [ 'mp3' ],
                 preload: true
@@ -44,13 +47,17 @@ module.factory('SongPlayer', function() {
         setAlbum: function(album) {
             currentAlbum = album;
         },
-        getTime2: function() {
+        registerListener: function(fn) {
+            if (currentSoundFile) {
+                currentSoundFile.bind('timeupdate', fn);
+            }
+        },
+        getTime: function() {
             return filterTimeCode(currentSoundFile.getTime());
         },
-        getDuration2: function() {
+        getDuration: function() {
             return filterTimeCode(currentSoundFile.getDuration());
         },
-
         play: function() {
             if (currentSongIndex === null) {
                 this.setSong(0);

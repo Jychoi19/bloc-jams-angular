@@ -5,50 +5,42 @@ app.controller('AlbumController', function($scope, $rootScope, SongPlayer){
  	SongPlayer.setAlbum(albumPicasso);
  	$scope.playing = false;
     $rootScope.bodyClass = 'album'; 
-    $scope.song = null;
+    $scope.currentSong = null;
     $scope.activePosition = 0;
-
+    // $scope.notPlaying = function(song) {
+    //     song !== $scope.currentSong || !$scope.playing;
+    // };
+    // $scope.isPaused = function(song) {
+    //     song === $scope.currentSong && !$scope.playing;
+    // };
+    var listener = function(){
+        $scope.$apply(function(){
+          $scope.time = SongPlayer.getTime();
+          $scope.duration = SongPlayer.getDuration();
+        });
+    };
 
     $scope.hoverOn = function(index) {
         $scope.activePosition = index;  
     };
-    // $scope.hoverOff = function(index) {
-    //     if ($scope.playing === true) {
-    //         $scope.activePosition = 0;
-    //     }
-    //     else {
-    //     $scope.activePosition = index;  
-    //     };
-    // };
-
-    $scope.getTime3 = function() {
-        if ($scope.song !== null) {
-            $scope.time1 = SongPlayer.getTime2();
-            return true;
-        };
-    };
-    $scope.getDuration3 = function() {
-        if ($scope.song !== null) {
-            $scope.duration1 = SongPlayer.getDuration2();
-            return true;
-        };
-    };    
-
     $scope.playSong = function(index) {
         SongPlayer.setSong(index);
-        $scope.song = SongPlayer.play();
+        $scope.currentSong = SongPlayer.play();
         $scope.playing = true;
+        SongPlayer.registerListener(listener);
     };
     $scope.pauseSong = function() {
         SongPlayer.pause();
         $scope.playing = false; 
     };
     $scope.nextSong = function() {
-        $scope.song = SongPlayer.next();
-        $scope.playing = true;        
+        $scope.currentSong = SongPlayer.next();
+        $scope.playing = true;   
+        SongPlayer.registerListener(listener);       
     };
     $scope.previousSong = function() {
-        $scope.song = SongPlayer.previous();
-        $scope.playing = true;        
+        $scope.currentSong = SongPlayer.previous();
+        $scope.playing = true;       
+        SongPlayer.registerListener(listener);
     };
 });
