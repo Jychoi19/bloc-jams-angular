@@ -23,6 +23,9 @@ app.controller('AlbumController', function($scope, $rootScope, SongPlayer){
     $scope.hoverOn = function(index) {
         $scope.activePosition = index;  
     };
+    $scope.hoverOff = function(index) {
+        $scope.activePosition = !index;  
+    };
     $scope.playSong = function(index) {
         SongPlayer.setSong(index);
         $scope.currentSong = SongPlayer.play();
