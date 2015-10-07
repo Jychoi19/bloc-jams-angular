@@ -23,6 +23,11 @@ module.factory('SongPlayer', function() {
                 currentSoundFile.setVolume(volume);
             }
         },
+        setTime: function(time) {
+            if (currentSoundFile) {
+                currentSoundFile.setTime(time);
+            }
+        },
         setSong: function(songNumber) {
             if (currentSongIndex === songNumber) {
                 return null;

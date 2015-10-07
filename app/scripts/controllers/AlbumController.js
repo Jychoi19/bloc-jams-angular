@@ -8,28 +8,23 @@ app.controller('AlbumController', function($scope, $rootScope, SongPlayer){
     $scope.currentSong = null;
     $scope.activePosition = 0;
     $scope.volume = 80;
+    $scope.progress = 0;   
 
-    $scope.trackIndexStyle = 10;
-    $scope.progress = 20;      
+    window.skope = $scope;
 
     $scope.$watch('volume', function(){
         SongPlayer.setVolume($scope.volume);
     });
-
-    // $scope.notPlaying = function(song) {
-    //     song !== $scope.currentSong || !$scope.playing;
-    // };
-    // $scope.isPaused = function(song) {
-    //     song === $scope.currentSong && !$scope.playing;
-    // };
+    $scope.$watch('progress', function() {
+        SongPlayer.setTime($scope.progress);
+    });
+    
     var listener = function(){
         $scope.$apply(function(){
           $scope.time = SongPlayer.getTime();
           $scope.duration = SongPlayer.getDuration();
         });
     };
-
-    // window.skope = $scope;
 
     $scope.hoverOn = function(index) {
         $scope.activePosition = index;  
