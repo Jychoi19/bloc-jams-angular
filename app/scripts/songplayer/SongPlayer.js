@@ -10,12 +10,6 @@ module.factory('SongPlayer', function() {
     var trackIndex = function(album, song) {
         return album.songs.indexOf(song);
     };
-    var setVolume = function(volume) {
- 
-        if (currentSoundFile) {
-            currentSoundFile.setVolume(volume);
-        }
-    };
     var filterTimeCode = function(timeInSeconds) {
         var minutes = parseFloat(Math.floor(timeInSeconds / 60));
         var seconds = parseFloat(Math.floor(timeInSeconds % 60));
@@ -24,6 +18,11 @@ module.factory('SongPlayer', function() {
     };
 
     return {
+        setVolume: function(volume) {
+            if (currentSoundFile) {
+                currentSoundFile.setVolume(volume);
+            }
+        },
         setSong: function(songNumber) {
             if (currentSongIndex === songNumber) {
                 return null;

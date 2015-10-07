@@ -7,6 +7,15 @@ app.controller('AlbumController', function($scope, $rootScope, SongPlayer){
     $rootScope.bodyClass = 'album'; 
     $scope.currentSong = null;
     $scope.activePosition = 0;
+    $scope.volume = 80;
+
+    $scope.trackIndexStyle = 10;
+    $scope.progress = 20;      
+
+    $scope.$watch('volume', function(){
+        SongPlayer.setVolume($scope.volume);
+    });
+
     // $scope.notPlaying = function(song) {
     //     song !== $scope.currentSong || !$scope.playing;
     // };
@@ -19,6 +28,8 @@ app.controller('AlbumController', function($scope, $rootScope, SongPlayer){
           $scope.duration = SongPlayer.getDuration();
         });
     };
+
+    // window.skope = $scope;
 
     $scope.hoverOn = function(index) {
         $scope.activePosition = index;  

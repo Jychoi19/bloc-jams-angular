@@ -1,21 +1,34 @@
 var myApp = angular.module('blocJams');
 
 myApp.directive('mySlider', function() {
+
     return {
         templateUrl: 'templates/slider.html',
         replace: true,
         restrict: 'E',
-        scope: { },
+        scope: { 
+            value: '='
+        },
         link: function(scope, element, attributes) {
-        	console.log(element);
-            scope.click = function(seekbars) {
-                console.log(seekbars)};
-       //      scope.percentages = function(seekBar, seekBarFillRatio) {
-       //          var offsetXPercent = seekBarFillRatio * 100;
-    			// offsetXPercent = Math.max(0, offsetXPercent);
-    			// offsetXPercent = Math.min(100, offsetXPercent);
-    			// var percentageString = offsetXPercent + '%';
-       //      }
+            scope.fill = {width: scope.value + "%"};
+            scope.thumb = {left: scope.value + "%"};
+
+            // debugger
+            // need to change undefined value below
+            // if (window.dscope === volume) window.dscope = scope;
+
+            element.on('mousedown', function(event){
+                var offsetX = event.pageX - (element[0].getBoundingClientRect().left);
+                var barWidth = element[0].offsetWidth;
+                var seekBarFillRatio = offsetX / barWidth;
+                scope.value = seekBarFillRatio * 100;
+                scope.value = Math.max(0, scope.value);
+                scope.value = Math.min(100, scope.value);
+            });
+            scope.$watch('value', function(){
+                scope.fill = {width: scope.value + "%"};
+                scope.thumb = {left: scope.value + "%"};
+            });
         }
     };
 });
@@ -37,7 +50,7 @@ myApp.directive('mySlider', function() {
 //     var $seekBars = $('.player-bar .seek-bar');
 
 //     $seekBars.click(function(event) {
-//         var offsetX = event.pageX - $(this).offset().left;
+//         var offsetX = event.pageX - $(this).offsetLeft;
 //         var barWidth = $(this).width();
 //         var seekBarFillRatio = offsetX / barWidth;
         
