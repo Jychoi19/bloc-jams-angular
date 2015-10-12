@@ -43,8 +43,8 @@
             <h2 class="artist-song-mobile"></h2>
                 <div class="seek-control">
                     <my-slider value="progress"></my-slider>
-                    <div class="current-time">{{ time }}</div>
-                    <div class="total-time">{{ duration }}</div>
+                    <div class="current-time">{{ time | filterTimeCode }}</div>
+                    <div class="total-time">{{ duration | filterTimeCode }}</div>
                 </div>
             <h3 class="artist-name">{{ album.artist }}</h3>
         </div>

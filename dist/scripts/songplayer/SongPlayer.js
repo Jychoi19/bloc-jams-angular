@@ -10,13 +10,6 @@ module.factory('SongPlayer', function() {
     var trackIndex = function(album, song) {
         return album.songs.indexOf(song);
     };
-    var filterTimeCode = function(timeInSeconds) {
-        var minutes = parseFloat(Math.floor(timeInSeconds / 60));
-        var seconds = parseFloat(Math.floor(timeInSeconds % 60));
-        var time = (minutes + ":" + ("0" + seconds).slice(-2));
-        return time;
-    };
-
 
     return {
         setVolume: function(volume) {
