@@ -10,22 +10,28 @@ app.controller('AlbumController', function($scope, $rootScope, SongPlayer){
     $scope.volume = 80;
     $scope.progress = 0;   
 
-    window.skope = $scope;
+    var listener = function(){
+        $scope.$digest();
+        $scope.$apply(function(){
+            $scope.time = SongPlayer.getTime();
+            $scope.duration = SongPlayer.getDuration();
+            $scope.updateSeekBarWhileSongPlays();
+        });
+    };
 
     $scope.$watch('volume', function(){
         SongPlayer.setVolume($scope.volume);
     });
     $scope.$watch('progress', function() {
-        SongPlayer.setTime($scope.progress);
-    });
-    
-    var listener = function(){
-        $scope.$apply(function(){
-          $scope.time = SongPlayer.getTime();
-          $scope.duration = SongPlayer.getDuration();
-        });
-    };
+        var songProgress = (SongPlayer.getTime() / SongPlayer.getDuration()) * 100;
+        if (Math.abs($scope.progress - songProgress) > 1) {
+          SongPlayer.setTime($scope.progress / 100 * SongPlayer.getDuration());
+        }
+    }); 
 
+    $scope.updateSeekBarWhileSongPlays = function() {
+        $scope.progress = (SongPlayer.getTime() / SongPlayer.getDuration()) * 100;
+    };
     $scope.hoverOn = function(index) {
         $scope.activePosition = index;  
     };

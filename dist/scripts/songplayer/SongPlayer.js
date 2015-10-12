@@ -17,6 +17,7 @@ module.factory('SongPlayer', function() {
         return time;
     };
 
+
     return {
         setVolume: function(volume) {
             if (currentSoundFile) {
@@ -56,11 +57,18 @@ module.factory('SongPlayer', function() {
                 currentSoundFile.bind('timeupdate', fn);
             }
         },
+
         getTime: function() {
-            return filterTimeCode(currentSoundFile.getTime());
+            if (currentSoundFile === null) {
+                return null;
+            }            
+            return currentSoundFile.getTime();
         },
         getDuration: function() {
-            return filterTimeCode(currentSoundFile.getDuration());
+            if (currentSoundFile === null) {
+                return null;
+            }
+            return currentSoundFile.getDuration();
         },
         play: function() {
             if (currentSongIndex === null) {

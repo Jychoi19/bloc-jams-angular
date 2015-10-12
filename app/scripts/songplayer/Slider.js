@@ -12,9 +12,6 @@ myApp.directive('mySlider', function() {
         link: function(scope, element, attributes) {
             scope.fill = {width: scope.value + "%"};
             scope.thumb = {left: scope.value + "%"};
-            // debugger
-            // need to change undefined value below
-            // if (window.dscope === undefined) window.dscope = scope;
 
             element.on('mousedown', function(event){
                 var offsetX = event.pageX - (element[0].getBoundingClientRect().left);
