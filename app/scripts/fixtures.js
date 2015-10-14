@@ -1,4 +1,5 @@
  var albumPicasso = {
+     id: "001",
      name: 'The Colors',
      artist: 'Pablo Picasso',
      label: 'Cubism',
@@ -14,6 +15,7 @@
  };
 
  var albumMarconi = {
+     id: "002",
      name: 'The Telephone',
      artist: 'Guglielmo Marconi',
      label: 'EM',
@@ -29,6 +31,7 @@
  };
 
  var albumDistract = {
+     id: "003",
      name: 'Easily Distracted',
      artist: "Joon 'Distract' Choi",
      label: 'Iconic Sounds',
