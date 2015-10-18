@@ -21,7 +21,7 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
          	templateUrl: '/templates/collection.html'
      	})
         .state('album', {
-        	 url: '/album',
+        	 url: '/album/:id',
          	controller: 'AlbumController',
          	templateUrl: '/templates/album.html'
      	})

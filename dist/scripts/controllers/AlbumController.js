@@ -1,18 +1,16 @@
 var app = angular.module('blocJams');
 
 app.controller('AlbumController', function($scope, $rootScope, $stateParams, SongPlayer){
- 	// $scope.album = $stateParams.id;
- 	// SongPlayer.setAlbum($stateParams.id);
-    $scope.album = albumPicasso;
-    SongPlayer.setAlbum(albumPicasso);
+ 	$scope.album = $stateParams.id;
+ 	SongPlayer.setAlbum($stateParams.id);
     $rootScope.bodyClass = 'album'; 
-    // $scope.playing = false;
+    $scope.playing = false; 
     // $scope.currentSong = null;
     // $scope.activePosition = 0;
     // $scope.volume = 80;
     // $scope.progress = 0;   
 
-    var listener = function(){
+   var listener = function(){
         $scope.$digest();
         $scope.$apply(function(){
             $scope.time = SongPlayer.getTime();
