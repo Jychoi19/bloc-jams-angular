@@ -6,13 +6,20 @@ module.factory('SongPlayer', function() {
     var currentSongIndex = null;
     var currentSongFromAlbum = null;
     var currentVolume = 80;
-   
+
     var trackIndex = function(album, song) {
         return album.songs.indexOf(song);
     };
 
     return {
+        getSongProgress: function() {
+            if (currentSoundFile === null) {
+                return null;
+            }
+            return currentSoundFile.getPercent();
+        },
         setVolume: function(volume) {
+            currentVolume = volume;
             if (currentSoundFile) {
                 currentSoundFile.setVolume(volume);
             }
@@ -45,15 +52,15 @@ module.factory('SongPlayer', function() {
         setAlbum: function(album) {
             currentAlbum = album;
         },
-        registerListener: function(fn) {
-            if (currentSoundFile) {
-                currentSoundFile.bind('timeupdate', fn);
-            }
+        getCurrentSong: function() {
+            return currentSongFromAlbum;
         },
-
+        getVolume: function() {
+            return currentVolume;
+        },
         getTime: function() {
             if (currentSoundFile === null) {
-                return null;
+                return 0;
             }            
             return currentSoundFile.getTime();
         },
@@ -96,6 +103,11 @@ module.factory('SongPlayer', function() {
             this.setSong(currentSongIndex - 1);
             currentSoundFile.play();
             return currentAlbum.songs[currentSongIndex];
+        },
+        registerListener: function(fn) {
+            if (currentSoundFile) {
+                currentSoundFile.bind('timeupdate', fn);
+            }
         },
     }
 });
