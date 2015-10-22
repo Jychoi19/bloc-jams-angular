@@ -12,6 +12,7 @@ app.controller('AlbumController', function($scope, $rootScope, $stateParams, Son
     $scope.playing = $scope.currentSong !== null;
     $scope.activePosition = $scope.currentSong !== null;
     $scope.volume = SongPlayer.getVolume();
+    $scope.progress = SongPlayer.getSongProgress();
     // $scope.progress = SongPlayer.getTime();
 
    var listener = function(){
@@ -20,6 +21,7 @@ app.controller('AlbumController', function($scope, $rootScope, $stateParams, Son
             $scope.time = SongPlayer.getTime();
             $scope.duration = SongPlayer.getDuration();
             $scope.updateSeekBarWhileSongPlays();
+            SongPlayer.getSongProgress();
         });
     };
 
