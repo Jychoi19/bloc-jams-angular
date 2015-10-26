@@ -9,11 +9,9 @@ app.controller('AlbumController', function($scope, $rootScope, $stateParams, Son
  	SongPlayer.setAlbum($scope.album);
     $rootScope.bodyClass = 'album'; 
     $scope.currentSong = SongPlayer.getCurrentSong();
-    $scope.playing = $scope.currentSong !== null;
+    $scope.playing = $scope.currentSong !== null && !SongPlayer.isPaused();
     $scope.activePosition = $scope.currentSong !== null;
     $scope.volume = SongPlayer.getVolume();
-    $scope.progress = SongPlayer.getSongProgress();
-    // $scope.progress = SongPlayer.getTime();
 
    var listener = function(){
         $scope.$digest();
@@ -21,9 +19,9 @@ app.controller('AlbumController', function($scope, $rootScope, $stateParams, Son
             $scope.time = SongPlayer.getTime();
             $scope.duration = SongPlayer.getDuration();
             $scope.updateSeekBarWhileSongPlays();
-            SongPlayer.getSongProgress();
         });
     };
+    SongPlayer.registerListener(listener);
 
     $scope.$watch('volume', function(){
         SongPlayer.setVolume($scope.volume);
@@ -37,7 +35,13 @@ app.controller('AlbumController', function($scope, $rootScope, $stateParams, Son
 
     $scope.updateSeekBarWhileSongPlays = function() {
         $scope.progress = (SongPlayer.getTime() / SongPlayer.getDuration()) * 100;
+        if (isNaN($scope.progress)) { $scope.progress = 0; }
     };
+
+    $scope.time = SongPlayer.getTime();
+    $scope.duration = SongPlayer.getDuration();
+    $scope.updateSeekBarWhileSongPlays();
+
     $scope.hoverOn = function(index) {
         $scope.activePosition = index;  
     };

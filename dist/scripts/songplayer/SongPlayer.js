@@ -12,11 +12,8 @@ module.factory('SongPlayer', function() {
     };
 
     return {
-        getSongProgress: function() {
-            if (currentSoundFile === null) {
-                return null;
-            }
-            return currentSoundFile.getPercent();
+        isPaused: function(){
+            return currentSoundFile.isPaused();
         },
         setVolume: function(volume) {
             currentVolume = volume;
